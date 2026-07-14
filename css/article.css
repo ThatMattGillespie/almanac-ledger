@@ -1,0 +1,197 @@
+/* ============================================================
+   Demo article / reading page for the Almanac.
+   Serif reading measure, brand tokens, theme-locked light.
+   Navigated to from Ledger III open entries (article.html?id=).
+   ============================================================ */
+
+.art { background: var(--color-bg); }
+
+/* ---- top bar ---- */
+.art-top { border-bottom: var(--rule-hair) solid var(--color-border); }
+.art-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  height: 64px;
+}
+.art-back {
+  font-family: var(--font-grotesque);
+  font-weight: 700;
+  font-size: var(--step--1);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-signal-text);
+  text-decoration: none;
+}
+.art-back:hover { color: var(--color-text); }
+.art-locator {
+  font-family: var(--font-grotesque);
+  font-weight: 700;
+  font-size: var(--step--1);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-text-mute);
+}
+
+/* ---- article header ---- */
+.art-head {
+  max-width: 46rem;
+  padding-top: clamp(2.5rem, 6vw, 4.5rem);
+  padding-bottom: var(--space-6);
+}
+.art-part {
+  font-family: var(--font-grotesque);
+  font-weight: 700;
+  font-size: var(--step--1);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-signal-text);
+  margin-bottom: var(--space-4);
+}
+.art-title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: var(--step-4);
+  line-height: 1.08;
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text);
+}
+.art-dek {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--step-2);
+  line-height: 1.4;
+  color: var(--color-text-mute);
+  margin-top: var(--space-4);
+  max-width: 40ch;
+}
+.art-byline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-4);
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: var(--rule-hair) solid var(--color-border);
+}
+.art-author { font-family: var(--font-grotesque); font-weight: 700; font-size: var(--step-0); color: var(--color-text); }
+.art-meta {
+  font-family: var(--font-grotesque);
+  font-size: var(--step--1);
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  color: var(--color-text-mute);
+}
+
+/* ---- lead figure ---- */
+.art-figure {
+  max-width: var(--width-content);
+  margin: var(--space-6) auto var(--space-8);
+  padding-inline: var(--gutter);
+}
+.art-figure img { width: 100%; aspect-ratio: 16 / 8; object-fit: cover; border: var(--rule-hair) solid var(--color-border); }
+.art-figure figcaption {
+  margin-top: var(--space-3);
+  font-family: var(--font-grotesque);
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-text-mute);
+}
+
+/* ---- body ---- */
+.art-body { max-width: 40rem; }
+.art-body p {
+  font-family: var(--font-serif);
+  font-size: var(--step-1);
+  line-height: 1.68;
+  color: var(--color-text-2);
+  margin-bottom: var(--space-5);
+}
+.art-lead::first-letter {
+  float: left;
+  font-weight: 700;
+  font-size: 3.6em;
+  line-height: .82;
+  padding: .06em .12em 0 0;
+  color: var(--color-signal);
+}
+.art-h2 {
+  font-family: var(--font-grotesque);
+  font-weight: 700;
+  font-size: var(--step-2);
+  letter-spacing: -.01em;
+  color: var(--color-text);
+  margin: var(--space-8) 0 var(--space-4);
+}
+.art-quote {
+  margin: var(--space-8) 0;
+  padding-left: var(--space-5);
+  border-left: var(--rule-bold) solid var(--color-signal);
+}
+.art-quote p {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--step-2);
+  line-height: 1.4;
+  color: var(--color-text);
+  margin: 0;
+}
+
+/* ---- next in the record ---- */
+.art-next { border-top: var(--rule-hair) solid var(--color-border); margin-top: var(--space-10); }
+.art-next-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  padding-block: var(--space-8);
+}
+.art-next-label {
+  font-family: var(--font-grotesque);
+  font-weight: 700;
+  font-size: var(--step--1);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-signal-text);
+  margin-bottom: var(--space-2);
+}
+.art-next-title { font-family: var(--font-serif); font-weight: 700; font-size: var(--step-2); line-height: 1.15; color: var(--color-text); max-width: 34ch; }
+.art-next-meta { font-family: var(--font-grotesque); font-size: var(--step--1); letter-spacing: .03em; text-transform: uppercase; color: var(--color-text-mute); margin-top: var(--space-2); }
+.art-next .btn { flex-shrink: 0; }
+
+/* ---- subscribe hook (dark) ---- */
+.art-sub { background: var(--color-surface-inv); }
+.art-sub-in {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  padding-block: var(--space-8);
+}
+.art-sub-head { font-family: var(--font-serif); font-weight: 700; font-size: var(--step-3); line-height: 1.1; color: #F4EFE6; max-width: 20ch; }
+.art-sub .capture input[type="email"] { color: #F4EFE6; border-color: #6B6153; background: transparent; }
+.art-sub .capture input[type="email"]::placeholder { color: #A79C8B; }
+
+/* ---- footer ---- */
+.art-foot { border-top: var(--rule-hair) solid var(--color-border); }
+.art-foot-row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-block: var(--space-5);
+  font-family: var(--font-grotesque);
+  font-size: var(--step--1);
+  letter-spacing: .03em;
+  color: var(--color-text-mute);
+}
+
+/* ---- responsive ---- */
+@media (max-width: 640px) {
+  .art-next-row { flex-direction: column; align-items: flex-start; }
+  .art-sub-in { flex-direction: column; align-items: flex-start; }
+  .art-foot-row { flex-direction: column; gap: var(--space-2); }
+}

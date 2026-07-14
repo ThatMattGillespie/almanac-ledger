@@ -1,0 +1,344 @@
+/* ============================================================
+   Concept · Ledger III  (evolution of Ledger II)
+   The register is still the interface, now with per-entry
+   "plates": hover (or focus) an entry to vertically extend it
+   and preview its cover, one at a time. Each entry carries a
+   one-line description that reveals as it scrolls into view.
+   Open entries link to the article page. Release band is dark.
+   Inherits reg-head / reg-mission / reg-facts / reg-foot from
+   ledger2.css; this file overrides the register + release.
+   ============================================================ */
+
+/* ---- editions strip (multi-volume affordance) ---- */
+.lg-edstrip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-4);
+  padding: var(--space-3) 0;
+  border-bottom: var(--rule-hair) solid var(--color-border);
+  font-family: var(--font-grotesque);
+  font-size: .66rem;
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-text-mute);
+}
+.lg-edstrip .now { color: var(--color-signal-text); font-weight: 700; }
+.lg-edstrip a { margin-left: auto; color: var(--color-signal-text); text-decoration: none; }
+.lg-edstrip a:hover { color: var(--color-text); }
+
+/* ---- register (full width, no side preview) ---- */
+.ledger3 .register { padding-bottom: var(--space-12); }
+
+.lg-cols {
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr) 7rem 4.5rem;
+  gap: var(--space-4);
+  padding: var(--space-2) 0;
+  border-top: var(--rule-bold) solid var(--color-text);
+  border-bottom: var(--rule-hair) solid var(--color-text);
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-text-mute);
+}
+.lg-cols span:nth-child(3),
+.lg-cols span:last-child { text-align: right; }
+
+.lg-part {
+  margin-top: var(--space-6);
+  padding-bottom: var(--space-2);
+  border-bottom: var(--rule-hair) solid var(--color-text-2);
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: var(--step-1);
+}
+.lg-part-no {
+  font-family: var(--font-grotesque);
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-signal-text);
+  margin-right: var(--space-3);
+}
+
+/* row */
+.lg-row {
+  display: block;
+  border-bottom: var(--rule-hair) solid var(--color-border);
+  color: inherit;
+  text-decoration: none;
+  transition: background-color .15s ease;
+}
+.lg-row.is-open { cursor: pointer; }
+.lg-row.is-open:hover,
+.lg-row.is-open:focus-visible {
+  background: var(--color-surface);
+  box-shadow: -0.75rem 0 0 var(--color-surface), 0.75rem 0 0 var(--color-surface);
+  outline: none;
+}
+.lg-row-line {
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr) 7rem 4.5rem;
+  gap: var(--space-4);
+  align-items: baseline;
+  padding: var(--space-4) 0;
+}
+.lg-no {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--step-1);
+  color: var(--color-signal-text);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.is-sealed .lg-no { color: var(--color-text-mute); }
+
+.lg-title {
+  display: block;
+  font-weight: 700;
+  font-size: var(--step-0);
+  line-height: 1.32;
+  color: var(--color-text);
+}
+.lg-row.is-open:hover .lg-title,
+.lg-row.is-open:focus-visible .lg-title { color: var(--color-signal-text); }
+.is-sealed .lg-title { color: var(--color-text-mute); font-weight: 600; }
+.lg-author {
+  display: block;
+  margin-top: 3px;
+  font-family: var(--font-serif);
+  font-size: var(--step--1);
+  color: var(--color-text-mute);
+}
+.lg-desc {
+  display: block;
+  margin-top: var(--space-2);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--step-0);
+  line-height: 1.4;
+  color: var(--color-text-2);
+  max-width: 58ch;
+}
+.is-sealed .lg-desc { color: var(--color-text-mute); }
+
+.lg-status {
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  text-align: right;
+}
+.st-live { color: var(--color-signal-text); }
+.st-next { color: var(--color-text); }
+.st-sealed { color: var(--color-text-mute); }
+.lg-date {
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: .06em;
+  color: var(--color-text-mute);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- reveal plate (vertical extend on hover / focus) ----
+   Every entry reveals a cover plate: the piece's image with its
+   title + author set as a printed-plate caption. Sealed entries
+   show the same plate, veiled — a genuine preview of what opens.  */
+.lg-reveal {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows .42s cubic-bezier(.16, 1, .3, 1);
+}
+.lg-reveal-in {
+  overflow: hidden;
+  min-height: 0;
+  padding-left: calc(3.5rem + var(--space-4));
+}
+@media (hover: hover) {
+  .lg-row:hover .lg-reveal,
+  .lg-row:focus-visible .lg-reveal { grid-template-rows: 1fr; }
+}
+
+.lg-plate {
+  display: grid;
+  grid-template-columns: 15rem minmax(0, 1fr);
+  gap: var(--space-5);
+  align-items: center;
+  max-width: 42rem;
+  margin: 0 0 var(--space-6);
+}
+.lg-plate-img {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  border: var(--rule-hair) solid var(--color-border);
+  background: var(--color-surface);
+}
+.lg-plate-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.05);
+  transition: transform .7s cubic-bezier(.16, 1, .3, 1);
+}
+@media (hover: hover) {
+  .lg-row:hover .lg-plate-img img,
+  .lg-row:focus-visible .lg-plate-img img { transform: scale(1); }
+}
+.lg-plate-body { display: flex; flex-direction: column; gap: var(--space-2); }
+.lg-plate-cue {
+  font-family: var(--font-grotesque);
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-signal-text);
+}
+
+/* sealed / next: veil the cover so it reads as embargoed */
+.is-sealed .lg-plate-img img,
+.is-next .lg-plate-img img { filter: grayscale(1) brightness(.94) contrast(.96); }
+.is-sealed .lg-plate-img::after,
+.is-next .lg-plate-img::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--color-bg) 40%, transparent);
+}
+.is-sealed .lg-plate-cue { color: var(--color-text-mute); }
+.is-next .lg-plate-cue { color: var(--color-text); }
+.lg-plate-seal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  padding: .28rem var(--space-2);
+  font-family: var(--font-grotesque);
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-bg);
+  background: var(--color-text-mute);
+}
+.is-next .lg-plate-seal { background: var(--color-signal); }
+
+/* ---- Variant A (default): slim plate — cover art only, title/author stay
+   in the index row above. The .lg-plate-cover overlay is not rendered. ---- */
+.lg-plate-cover { display: none; }
+
+/* ---- Variant B (body.plate-b): cover treatment — the piece's title + author
+   set over the image as printed-cover typography, so the repeat reads as the
+   artifact showing its own title, not duplicated metadata. ---- */
+.plate-b .lg-plate-cover {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  padding: var(--space-5) var(--space-4) var(--space-3);
+  background: linear-gradient(to top,
+    rgba(32, 28, 21, .94) 0%,
+    rgba(32, 28, 21, .62) 52%,
+    rgba(32, 28, 21, 0) 100%);
+}
+.plate-b .lg-plate-cover .lg-plate-title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: var(--step-0);
+  line-height: 1.16;
+  color: var(--color-paper-on-inv);
+}
+.plate-b .lg-plate-cover .lg-plate-author {
+  font-family: var(--font-grotesque);
+  font-size: .58rem;
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-mute-on-inv);
+}
+
+/* ---- release / waitlist (dark, reverted) ---- */
+.ledger3 .reg-release {
+  background: var(--color-surface-inv);
+  border-top: var(--rule-bold) solid var(--color-signal);
+}
+.ledger3 .reg-release-eyebrow { color: #ED6A40; }
+.ledger3 .reg-release-head { color: #F4EFE6; }
+.ledger3 .reg-release-copy { color: #C9C0B2; }
+.ledger3 .reg-release .capture input[type="email"] {
+  color: #F4EFE6;
+  border-color: #6B6153;
+  background: transparent;
+}
+.ledger3 .reg-release .capture input[type="email"]::placeholder { color: #A79C8B; }
+
+/* ---- whole-row reveal: the line fades up as a unit (shared .reveal handles
+   opacity + lift on .lg-row-line); the title/author/one-liner settle in a
+   subtle cascade so the appearance reads as intentional, not desc-only. ---- */
+.lg-row-line.reveal .lg-title { transition: transform .55s cubic-bezier(.16, 1, .3, 1) .04s; transform: translateY(6px); }
+.lg-row-line.reveal .lg-author { transition: transform .55s cubic-bezier(.16, 1, .3, 1) .10s; transform: translateY(6px); }
+.lg-row-line.reveal .lg-desc { transition: transform .55s cubic-bezier(.16, 1, .3, 1) .16s; transform: translateY(6px); }
+.lg-row-line.reveal.is-in .lg-title,
+.lg-row-line.reveal.is-in .lg-author,
+.lg-row-line.reveal.is-in .lg-desc { transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .lg-row-line.reveal .lg-title,
+  .lg-row-line.reveal .lg-author,
+  .lg-row-line.reveal .lg-desc { transform: none; transition: none; }
+}
+
+/* ---- preview toggle (temporary: comparing plate styles A / B) ---- */
+.lg-previewbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding: var(--space-3) 0 0;
+  font-family: var(--font-grotesque);
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-text-mute);
+}
+.lg-previewbar a {
+  color: var(--color-signal-text);
+  text-decoration: none;
+  padding: .12rem .5rem;
+  border: var(--rule-hair) solid var(--color-border);
+}
+.lg-previewbar a:hover { border-color: var(--color-signal-text); }
+.lg-previewbar a.is-cur {
+  background: var(--color-text);
+  color: var(--color-bg);
+  border-color: var(--color-text);
+}
+
+/* ---- touch: no hover, so reveal the plate in-flow (compact) ---- */
+@media (hover: none) {
+  .lg-reveal { grid-template-rows: 1fr; }
+  .lg-reveal-in { padding-top: var(--space-2); }
+  .lg-plate-img img { transform: none; }
+}
+
+/* ---- responsive ---- */
+@media (max-width: 640px) {
+  .lg-cols { display: none; }
+  .lg-row-line { grid-template-columns: 2.5rem minmax(0, 1fr); row-gap: var(--space-1); }
+  .lg-status { grid-column: 2; text-align: left; }
+  .lg-date { grid-column: 2; text-align: left; }
+  .lg-reveal-in { padding-left: calc(2.5rem + var(--space-4)); }
+  .lg-plate { grid-template-columns: 9rem minmax(0, 1fr); gap: var(--space-4); max-width: none; }
+  .lg-plate-img { aspect-ratio: 3 / 4; }   /* portrait cover on mobile */
+  .lg-edstrip a { margin-left: 0; flex-basis: 100%; }
+}

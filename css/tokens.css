@@ -1,0 +1,128 @@
+/* ============================================================
+   Global Peace Almanac — design tokens
+   Source: Config Docs/gpa-design-tokens.md (v1, sampled from
+   EPI_GPA_160626_FinalPrint.pdf). Durable layer + Vol. I signal.
+   ============================================================ */
+
+/* ---- DIN 2014 (self-hosted, repo webfonts) ---- */
+@font-face {
+  font-family: 'DIN 2014';
+  src: url('../fonts/DIN2014-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'DIN 2014';
+  src: url('../fonts/DIN2014-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'DIN 2014';
+  src: url('../fonts/DIN2014-Italic.woff') format('woff');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'DIN 2014';
+  src: url('../fonts/DIN2014-DemiBold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'DIN 2014';
+  src: url('../fonts/DIN2014-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'DIN 2014';
+  src: url('../fonts/DIN2014-ExtraBold.woff') format('woff');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* --- durable structure (fixed across volumes) --- */
+  --color-bg:          #FBFAF7;   /* warm paper */
+  --color-bg-tint:     #FCE4D8;   /* blush sections */
+  --color-surface:     #F4EFE6;
+  --color-surface-inv: #201C15;
+  --color-text:        #2B261D;   /* warm ink */
+  --color-text-2:      #3B3529;
+  --color-text-mute:   #5F574B;
+  --color-border:      #DED5C8;
+
+  /* paper-toned ink for use on the inverted surface */
+  --color-paper-on-inv: #F4EFE6;
+  --color-mute-on-inv:  #B0A794;
+
+  --font-display:   'Barlow Condensed', 'DIN 2014', sans-serif; /* DIN 2014 Narrow not licensed for web yet */
+  --font-grotesque: 'DIN 2014', 'Barlow Semi Condensed', system-ui, sans-serif;
+  --font-serif:     'Baskerville', 'Libre Baskerville', Georgia, serif;
+
+  /* type scale (fluid, ~1.28 ratio) */
+  --step-6:  clamp(3.6rem, 2.4rem + 6vw, 7.5rem);
+  --step-5:  clamp(3rem, 2.2rem + 4vw, 5.2rem);
+  --step-4:  clamp(2.4rem, 1.9rem + 2.4vw, 3.6rem);
+  --step-3:  clamp(1.9rem, 1.6rem + 1.4vw, 2.6rem);
+  --step-2:  clamp(1.5rem, 1.3rem + 0.8vw, 1.9rem);
+  --step-1:  clamp(1.2rem, 1.1rem + 0.4vw, 1.4rem);
+  --step-0:  clamp(1rem, 0.97rem + 0.15vw, 1.06rem);
+  --step--1: clamp(0.78rem, 0.76rem + 0.1vw, 0.83rem);
+
+  --tracking-label: .14em;
+  --tracking-tight: -.01em;
+  --leading-tight: 1.02;
+  --leading-head: 1.08;
+  --leading-body: 1.6;
+
+  /* space, layout, line */
+  --space-1: .25rem;  --space-2: .5rem;  --space-3: .75rem;
+  --space-4: 1rem;    --space-5: 1.5rem; --space-6: 2rem;
+  --space-8: 3rem;    --space-10: 4rem;  --space-12: 6rem;
+  --space-16: 8rem;
+
+  --width-content: 1180px;
+  --gutter: clamp(1.25rem, 4vw, 4rem);
+  --measure: 66ch;
+  --rule-hair: 1px;
+  --rule-bold: 3px;
+  --radius-0: 0;
+  --shadow-card: 0 1px 2px rgba(43,38,29,.06), 0 8px 24px -12px rgba(43,38,29,.18);
+}
+
+/* --- themeable: reassign per volume --- */
+:root {
+  --color-signal:      #E65028;   /* Vol. I vermilion — display/large use only */
+  --color-signal-text: #A8351A;   /* AA on paper — links, eyebrows, labels */
+}
+
+/* --- dark theme layer (Concept: The Field) ---
+   Warm near-black, no pure #000. Theme-locked: the whole page is dark.
+   On this ground vermilion clears WCAG AA for text (E65028 on 16130E ≈ 4.96:1),
+   so the signal doubles as a legible accent, not just a display color. */
+body.field {
+  --color-bg:          #16130E;   /* warm near-black */
+  --color-bg-tint:     #241812;   /* deep ember panel (the dark blush) */
+  --color-surface:     #211C15;   /* elevated warm charcoal */
+  --color-surface-inv: #F4EFE6;   /* light paper, used sparingly if inverted */
+  --color-text:        #F4EFE6;   /* paper on ink */
+  --color-text-2:      #DCD4C6;
+  --color-text-mute:   #A79C8B;
+  --color-border:      #342E24;   /* warm dark hairline */
+
+  --color-paper-on-inv: #2B261D;  /* warm ink, for any light inset */
+  --color-mute-on-inv:  #5F574B;
+
+  --color-signal:      #E65028;
+  --color-signal-text: #ED6A40;   /* brighter vermilion — AA on the dark ground */
+
+  --shadow-card: 0 1px 2px rgba(0,0,0,.4), 0 12px 32px -14px rgba(0,0,0,.6);
+}

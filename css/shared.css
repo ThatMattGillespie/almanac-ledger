@@ -1,0 +1,212 @@
+/* ============================================================
+   Shared base + print devices + prototype switcher
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-serif);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img { max-width: 100%; display: block; }
+h1, h2, h3 { text-wrap: balance; }
+a { color: var(--color-signal-text); text-decoration-color: color-mix(in srgb, var(--color-signal-text) 40%, transparent); text-underline-offset: 3px; }
+a:hover { text-decoration-color: var(--color-signal-text); }
+
+:focus-visible {
+  outline: 2px solid var(--color-signal-text);
+  outline-offset: 3px;
+}
+
+::selection { background: var(--color-bg-tint); color: var(--color-signal-text); }
+
+.container {
+  max-width: var(--width-content);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* ---- print devices ---- */
+
+/* eyebrow label + short signal rule */
+.eyebrow {
+  font-family: var(--font-grotesque);
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-signal-text);
+}
+.eyebrow--ruled { display: inline-flex; align-items: center; gap: var(--space-3); }
+.eyebrow--ruled::before {
+  content: "";
+  width: 2rem;
+  height: var(--rule-bold);
+  background: var(--color-signal);
+}
+
+.rule-hair { border: 0; border-top: var(--rule-hair) solid var(--color-border); }
+.rule-bold { border: 0; border-top: var(--rule-bold) solid var(--color-signal); }
+
+/* dot-grid band, from the part-opener pages */
+.dot-grid {
+  background-image: radial-gradient(color-mix(in srgb, var(--color-text-mute) 55%, transparent) 1px, transparent 1.5px);
+  background-size: 13px 13px;
+}
+
+/* oversized roman numeral: lead glyph vermilion, tail fading to blush */
+.numeral {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  line-height: .8;
+  letter-spacing: -.02em;
+}
+.numeral .lead {
+  background: linear-gradient(160deg, #E86A3C 0%, var(--color-signal) 55%, #C8431F 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.numeral .tail {
+  background: linear-gradient(100deg, color-mix(in srgb, var(--color-signal) 55%, var(--color-bg-tint)) 0%, var(--color-bg-tint) 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* dove end-mark */
+.dove-mark { display: inline-block; width: 1.1em; height: 1.1em; vertical-align: -0.18em; fill: var(--color-signal); }
+
+/* ---- controls ---- */
+
+.btn {
+  display: inline-block;
+  font-family: var(--font-grotesque);
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: var(--radius-0);
+  padding: .9em 1.6em;
+  cursor: pointer;
+  transition: background-color .18s ease, color .18s ease, border-color .18s ease;
+}
+.btn--signal {
+  background: var(--color-signal);
+  color: #FFF7F2;
+  border: var(--rule-hair) solid var(--color-signal);
+}
+.btn--signal:hover { background: #C8431F; border-color: #C8431F; }
+.btn--ghost {
+  background: transparent;
+  color: var(--color-text);
+  border: var(--rule-hair) solid var(--color-text-2);
+}
+.btn--ghost:hover { border-color: var(--color-signal-text); color: var(--color-signal-text); }
+
+/* email capture */
+.capture { display: flex; max-width: 26rem; }
+.capture input[type="email"] {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-grotesque);
+  font-size: var(--step--1);
+  letter-spacing: .04em;
+  color: var(--color-text);
+  background: transparent;
+  border: var(--rule-hair) solid var(--color-text-2);
+  border-right: 0;
+  border-radius: var(--radius-0);
+  padding: .9em 1em;
+}
+.capture input[type="email"]::placeholder { color: var(--color-text-mute); }
+.capture .btn { flex-shrink: 0; }
+.capture-note {
+  font-family: var(--font-grotesque);
+  font-size: var(--step--1);
+  letter-spacing: .04em;
+  color: var(--color-text-mute);
+  margin-top: var(--space-2);
+}
+.capture-done {
+  font-family: var(--font-grotesque);
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-signal-text);
+  border-left: var(--rule-bold) solid var(--color-signal);
+  padding: .55em 0 .55em 1em;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---- scroll reveal ---- */
+.reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.is-in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; }
+}
+
+/* ---- concept switcher ---- */
+.switcher {
+  position: fixed;
+  left: var(--space-4);
+  bottom: var(--space-4);
+  z-index: 90;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  max-width: min(94vw, 760px);
+  background: #201C15;
+  box-shadow: var(--shadow-card);
+}
+.switcher-label {
+  font-family: var(--font-grotesque);
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: #B0A794;
+  display: flex;
+  align-items: center;
+  padding: 0 .7em 0 1em;
+  border-right: 1px solid #3B3529;
+}
+.switcher a {
+  font-family: var(--font-grotesque);
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #F4EFE6;
+  padding: .85em 1em;
+  transition: color .15s ease, background-color .15s ease;
+}
+.switcher a:hover { color: #FFF; background: #2B261D; }
+.switcher a[aria-current="page"] { background: #E65028; color: #FFF7F2; }
+@media (max-width: 640px) {
+  .switcher { left: 0; right: 0; bottom: 0; justify-content: center; }
+}
