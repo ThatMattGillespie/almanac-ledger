@@ -42,7 +42,7 @@
 
 <main>
   <section class="reg-mission container">
-    <p class="reg-mission-text">Approach 1: the cover lives only in the preview surface, a sticky panel on the right (hover) or a sticky band up top (scroll on mobile). Each row carries its title, author, and a one-line hook; click a row to open the full article.</p>
+    <p class="reg-mission-text">Approach 1, refined: the register lists title, author, status, and release only. Scroll a row into focus and its cover, one-line preview, and a link through to the full entry appear in the panel on the right. On mobile the cover rides a sticky band up top while the focused row expands to reveal its line.</p>
     <dl class="reg-facts">
       <div><dt>Entries</dt><dd>15</dd></div>
       <div><dt>Open</dt><dd>03</dd></div>
@@ -58,10 +58,11 @@
           <img class="lg-preview-img" src="assets/cover-vol1.jpg" alt="">
           <img class="lg-preview-img" src="" alt="">
         </div>
-        <p class="lg-preview-cap">
-          <span class="lg-preview-title">Global Peace Almanac</span>
-          <span class="lg-preview-status">Volume I · Hover or scroll the register</span>
-        </p>
+        <div class="lg-preview-cap">
+          <span class="lg-preview-desc">Scroll the register to preview each entry.</span>
+          <span class="lg-preview-status">Volume I</span>
+          <a class="lg-preview-cta" href="#" tabindex="-1" hidden>Read the entry <span aria-hidden="true">&rarr;</span></a>
+        </div>
       </aside>
       <div class="lg-register-col">
         <div class="lg-cols" aria-hidden="true">
@@ -75,7 +76,7 @@
         <div class="lg-main">
           <span class="lg-title">The Liberal Peace Is Dead. What's Replacing It?</span>
           <span class="lg-author">Roger Mac Ginty · Durham University</span>
-          <span class="lg-desc">Why the postwar template for peace lost its authority, and what is taking its place.</span>
+          <span class="lg-desc"><span class="lg-desc-t">Why the postwar template for peace lost its authority, and what is taking its place.</span></span>
         </div>
         <span class="lg-status st-live">Open</span>
         <span class="lg-date">05.26</span>
@@ -87,7 +88,7 @@
         <div class="lg-main">
           <span class="lg-title">New Peacemakers and Old International Institutions</span>
           <span class="lg-author">Richard Gowan · International Crisis Group</span>
-          <span class="lg-desc">The rising actors reshaping mediation while old institutions struggle to keep up.</span>
+          <span class="lg-desc"><span class="lg-desc-t">The rising actors reshaping mediation while old institutions struggle to keep up.</span></span>
         </div>
         <span class="lg-status st-live">Open</span>
         <span class="lg-date">06.26</span>
@@ -99,7 +100,7 @@
         <div class="lg-main">
           <span class="lg-title">A World in Turmoil: What Global Conflict Trends Tell Us</span>
           <span class="lg-author">Siri Aas Rustad &amp; Henrik Urdal · PRIO</span>
-          <span class="lg-desc">What the latest global conflict data actually says about where we are headed.</span>
+          <span class="lg-desc"><span class="lg-desc-t">What the latest global conflict data actually says about where we are headed.</span></span>
         </div>
         <span class="lg-status st-live">Open</span>
         <span class="lg-date">07.26</span>
@@ -111,7 +112,7 @@
         <div class="lg-main">
           <span class="lg-title">The Peacebuilding Field Is Experiencing an Identity Crisis. But That's How We Grow.</span>
           <span class="lg-author">Peter J. Quaranto · Alliance for Peacebuilding</span>
-          <span class="lg-desc">The field is unsettled, and that turbulence may be the surest sign of its growth.</span>
+          <span class="lg-desc"><span class="lg-desc-t">The field is unsettled, and that turbulence may be the surest sign of its growth.</span></span>
         </div>
         <span class="lg-status st-next">Opens next</span>
         <span class="lg-date">08.26</span>
@@ -125,7 +126,7 @@
         <div class="lg-main">
           <span class="lg-title">On Evidence, Experimentation and Risk</span>
           <span class="lg-author">Interview with Perry Cammack · Rockefeller Brothers Fund</span>
-          <span class="lg-desc">A candid conversation about proof, failure, and betting on what might work.</span>
+          <span class="lg-desc"><span class="lg-desc-t">A candid conversation about proof, failure, and betting on what might work.</span></span>
         </div>
         <span class="lg-status st-sealed">Sealed</span>
         <span class="lg-date">09.26</span>
@@ -137,7 +138,7 @@
         <div class="lg-main">
           <span class="lg-title">Is There Proof That Conflict Prevention Really Works?</span>
           <span class="lg-author">Ben Valentino · Dartmouth College</span>
-          <span class="lg-desc">Testing the hard claim that prevention saves more than it ever costs.</span>
+          <span class="lg-desc"><span class="lg-desc-t">Testing the hard claim that prevention saves more than it ever costs.</span></span>
         </div>
         <span class="lg-status st-sealed">Sealed</span>
         <span class="lg-date">10.26</span>
@@ -149,7 +150,7 @@
         <div class="lg-main">
           <span class="lg-title">Measuring What Gets Missed: ACLED's Peace Agreement and Ceasefire Tracker</span>
           <span class="lg-author">Clionadh Raleigh &amp; Nohad Eltayeb · ACLED</span>
-          <span class="lg-desc">Building the data infrastructure to see ceasefires and agreements as they happen.</span>
+          <span class="lg-desc"><span class="lg-desc-t">Building the data infrastructure to see ceasefires and agreements as they happen.</span></span>
         </div>
         <span class="lg-status st-sealed">Sealed</span>
         <span class="lg-date">11.26</span>
@@ -161,7 +162,7 @@
         <div class="lg-main">
           <span class="lg-title">Why Peacebuilding Is Falling Short, and Four Practices to Maximize Investments</span>
           <span class="lg-author">Milt Lauenstein · The Less War Initiative</span>
-          <span class="lg-desc">Four practical shifts to get more peace from every dollar committed.</span>
+          <span class="lg-desc"><span class="lg-desc-t">Four practical shifts to get more peace from every dollar committed.</span></span>
         </div>
         <span class="lg-status st-sealed">Sealed</span>
         <span class="lg-date">12.26</span>
@@ -175,7 +176,7 @@
         <div class="lg-main">
           <span class="lg-title">What Local Ownership Requires of Non-Locals</span>
           <span class="lg-author">Libby Hoffman · Catalyst for Peace</span>
-          <span class="lg-desc">The discipline outsiders need before handing power back to communities.</span>
+          <span class="lg-desc"><span class="lg-desc-t">The discipline outsiders need before handing power back to communities.</span></span>
         </div>
         <span class="lg-status st-sealed">Sealed</span>
         <span class="lg-date">01.27</span>
@@ -187,7 +188,7 @@
         <div class="lg-main">
           <span class="lg-title">At Peace with AI?: What Still Needs Interrogating</span>
           <span class="lg-author">Augusta Nannerini · Everyday AI Practices</span>
-          <span class="lg-desc">The questions we still have not asked about automation in conflict zones.</span>
+          <span class="lg-desc"><span class="lg-desc-t">The questions we still have not asked about automation in conflict zones.</span></span>
         </div>
         <span class="lg-status st-sealed">Sealed</span>
         <span class="lg-date">02.27</span>
@@ -199,7 +200,7 @@
         <div class="lg-main">
           <span class="lg-title">A Model for Digital Peacebuilding: Bridging Divides in Ethiopia</span>
           <span class="lg-author">Samah Abdalrahman · Search for Common Ground</span>
-          <span class="lg-desc">How online bridge-building held up against real division in Ethiopia.</span>
+          <span class="lg-desc"><span class="lg-desc-t">How online bridge-building held up against real division in Ethiopia.</span></span>
         </div>
         <span class="lg-status st-sealed">Sealed</span>
         <span class="lg-date">03.27</span>
@@ -211,7 +212,7 @@
         <div class="lg-main">
           <span class="lg-title">Reclaiming Narrative Power in a Militarized World</span>
           <span class="lg-author">Sonja Borgmann · George Mason University</span>
-          <span class="lg-desc">Contesting the stories that keep militarized worldviews in place.</span>
+          <span class="lg-desc"><span class="lg-desc-t">Contesting the stories that keep militarized worldviews in place.</span></span>
         </div>
         <span class="lg-status st-sealed">Sealed</span>
         <span class="lg-date">04.27</span>
@@ -225,7 +226,7 @@
         <div class="lg-main">
           <span class="lg-title">In the Age of AI: Why Data Autonomy and Cooperative Sense-Making Are Peacebuilding Imperatives</span>
           <span class="lg-author">Scott Shadian · Emergence Field Labs</span>
-          <span class="lg-desc">Why data autonomy and shared sense-making are now peacebuilding infrastructure.</span>
+          <span class="lg-desc"><span class="lg-desc-t">Why data autonomy and shared sense-making are now peacebuilding infrastructure.</span></span>
         </div>
         <span class="lg-status st-sealed">Sealed</span>
         <span class="lg-date">05.27</span>
@@ -237,7 +238,7 @@
         <div class="lg-main">
           <span class="lg-title">Revitalizing the Peace Ecosystem: A New Strategy for Peace Philanthropy</span>
           <span class="lg-author">Istra Fuhrmann · Peace and Security Funders Group</span>
-          <span class="lg-desc">A new strategy for the philanthropy that funds the field.</span>
+          <span class="lg-desc"><span class="lg-desc-t">A new strategy for the philanthropy that funds the field.</span></span>
         </div>
         <span class="lg-status st-sealed">Sealed</span>
         <span class="lg-date">06.27</span>
@@ -249,7 +250,7 @@
         <div class="lg-main">
           <span class="lg-title">Reimagining Security from the Ground Up</span>
           <span class="lg-author">Erika Gregory · Horizon 2045</span>
-          <span class="lg-desc">Starting over from human needs rather than the machinery of defense.</span>
+          <span class="lg-desc"><span class="lg-desc-t">Starting over from human needs rather than the machinery of defense.</span></span>
         </div>
         <span class="lg-status st-sealed">Sealed</span>
         <span class="lg-date">07.27</span>
