@@ -22,7 +22,11 @@
     if (cover && cover !== curCover) {
       var nextIdx = 1 - buf;
       var next = imgs[nextIdx];
+      var done = false;   // guard: complete-check and onload must not both run
       var show = function () {
+        if (done) return;
+        done = true;
+        next.onload = null;
         next.classList.add('is-active');
         imgs[buf].classList.remove('is-active');
         buf = nextIdx;
@@ -46,17 +50,10 @@
     };
   }
 
-  var desktop = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-
-  if (desktop) {
-    rows.forEach(function (r) {
-      r.addEventListener('mouseenter', function () {
-        var d = dataFor(r);
-        setPreview(d.cover, d.title, d.status, d.veil);
-      });
-    });
-  } else if ('IntersectionObserver' in window) {
-    // a thin focus band across the viewport centre; the row inside it wins
+  // One model on every screen: scroll position drives the preview. Whichever
+  // row sits in the viewport's focus band becomes .is-focus and swings the
+  // cover, so nobody has to hover or click just to browse.
+  if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (e.isIntersecting) {
@@ -66,7 +63,7 @@
           setPreview(d.cover, d.title, d.status, d.veil);
         }
       });
-    }, { rootMargin: '-46% 0px -46% 0px', threshold: 0 });
+    }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
     rows.forEach(function (r) { io.observe(r); });
   }
 

@@ -76,8 +76,15 @@
   color: var(--color-signal-text);
 }
 
-/* row highlight when it is the one driving the preview (mobile scroll focus) */
-.lg-row.is-focus { background: var(--color-surface); }
+/* row highlight when it is the one driving the preview.
+   A surface tint + a signal marker down the left edge links the row to the
+   cover currently showing in the floating panel. */
+.lg-row { transition: background .3s ease, box-shadow .3s ease; }
+.lg-row.is-focus {
+  background: var(--color-surface);
+  box-shadow: inset 3px 0 0 var(--color-signal);
+}
+.lg-row.is-focus .lg-no { color: var(--color-signal-text); }
 
 /* ---- mobile: preview becomes a sticky top band ---- */
 @media (max-width: 920px) {
