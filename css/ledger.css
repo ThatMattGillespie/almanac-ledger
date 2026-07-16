@@ -18,12 +18,15 @@
 /* the dim layer is desktop-only; the cover shows at every width */
 .reg-hero-overlay { display: none; }
 .reg-hero-media { position: relative; }
-/* the sunburst rides the cover's top-right corner wherever the cover shows */
+/* the sunburst rides the mockup's top-right cover corner; percentage anchor
+   maps to the same point on the book at every screen size */
 .reg-hero-media .reg-stamp {
   position: absolute;
-  top: -0.6rem;
-  right: -0.6rem;
+  top: 14%;
+  left: 74%;
+  right: auto;
   z-index: 1;
+  transform: translate(-50%, -50%) rotate(-6deg);
 }
 .reg-issuer {
   display: flex;
@@ -334,16 +337,7 @@ a.lg-title:hover { color: var(--color-signal-text); }
     display: block;
     width: auto;
     max-width: 100%;
-    max-height: 74vh;
-    border: var(--rule-hair) solid var(--color-border);
-    box-shadow: var(--shadow-card);
-  }
-  /* 17-authors badge as a sticker on the cover's top-right corner */
-  .reg-hero-media .reg-stamp {
-    position: absolute;
-    top: -0.9rem;
-    right: -0.9rem;
-    z-index: 1;
+    max-height: 82vh;
   }
 
   .reg-hero-overlay {
