@@ -37,4 +37,33 @@
       form.replaceWith(done);
     });
   });
+
+  // ---- ledger row preview (desktop flourish; the aside is hidden on mobile) ----
+  const preview = document.getElementById('ledger-preview');
+  if (preview) {
+    const img = preview.querySelector('img');
+    const fallback = preview.querySelector('.preview-fallback');
+    const fallbackNum = preview.querySelector('.preview-fallback .numeral');
+    document.querySelectorAll('.ledger-row[data-part]').forEach(function (row) {
+      row.addEventListener('mouseenter', function () {
+        const src = row.dataset.img;
+        if (src) {
+          img.src = src;
+          img.hidden = false;
+          fallback.hidden = true;
+        } else {
+          img.hidden = true;
+          fallback.hidden = false;
+          const n = row.dataset.part;
+          fallbackNum.innerHTML =
+            '<span class="lead">' + n.charAt(0) + '</span>' +
+            (n.length > 1 ? '<span class="tail">' + n.slice(1) + '</span>' : '');
+        }
+        preview.classList.add('is-active');
+      });
+      row.addEventListener('mouseleave', function () {
+        preview.classList.remove('is-active');
+      });
+    });
+  }
 })();
