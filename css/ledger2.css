@@ -126,7 +126,7 @@
 
 .ledger-part {
   margin-top: var(--space-6);
-  padding-bottom: var(--space-2);
+  padding-bottom: var(--space-4);
   border-bottom: var(--rule-hair) solid var(--color-text-2);
   font-family: var(--font-serif);
   font-weight: 700;
@@ -156,7 +156,7 @@
 .lg-no { font-weight: 700; font-size: var(--step--1); letter-spacing: .08em; color: var(--color-signal-text); }
 .is-sealed .lg-no { color: var(--color-text-mute); }
 
-.lg-title { display: block; font-weight: 700; font-size: var(--step-0); line-height: 1.35; color: var(--color-text); text-decoration: none; }
+.lg-title { display: block; font-weight: 700; font-size: 1.1rem; line-height: 1.35; color: var(--color-text); text-decoration: none; }
 a.lg-title:hover { color: var(--color-signal-text); }
 .is-sealed .lg-title { color: var(--color-text-mute); font-weight: 600; }
 .lg-author { display: block; margin-top: 2px; font-family: var(--font-serif); font-size: var(--step--1); color: var(--color-text-mute); }

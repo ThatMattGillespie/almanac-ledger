@@ -100,7 +100,7 @@
 .lg-title {
   display: block;
   font-weight: 700;
-  font-size: var(--step-0);
+  font-size: 1.1rem;
   line-height: 1.32;
   color: var(--color-text);
 }
