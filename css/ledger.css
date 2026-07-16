@@ -7,7 +7,10 @@
 .ledger { font-family: var(--font-grotesque); }
 
 /* ---- head ---- */
-.reg-head { border-top: 6px solid var(--color-signal); }
+.reg-head {
+  border-top: 6px solid var(--color-signal);
+  background: linear-gradient(180deg, #FFFFFF 0%, var(--color-bg-tint) 100%);
+}
 .reg-head-row {
   display: flex;
   justify-content: space-between;
@@ -316,20 +319,22 @@ a.lg-title:hover { color: var(--color-signal-text); }
     height: 100vh;
     z-index: 0;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     overflow: hidden;
   }
   /* one centered column: EPI logo -> "presents the" -> printed cover -> subtitle.
      .reg-head-text unwraps (display:contents) so its children order in the same
-     flex column as the cover; the cover carries the wordmark, so the H1 is hidden. */
+     flex column as the cover; the cover carries the wordmark, so the H1 is hidden.
+     Anchored near the top (flex-start, not centered) so the column doesn't float
+     in an even band of empty space above and below. */
   .reg-head-row {
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     text-align: center;
     gap: 0;
     width: 100%;
-    padding-block: clamp(1.5rem, 4vh, 2.5rem);
+    padding-block: clamp(1rem, 3vh, 1.75rem) 0;
     position: relative;
     z-index: 1;
   }
