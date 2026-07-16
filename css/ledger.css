@@ -465,8 +465,7 @@ a.lg-title:hover { color: var(--color-signal-text); }
   .ledger-row {
     grid-template-columns:
       [cover] clamp(4.5rem, 20vw, 5.5rem)
-      [pad-l] minmax(0, 1fr)
-      [m1] auto [m2] auto [m3] auto
+      [content] auto [m1] auto [m2] auto
       [pad-r] minmax(0, 1fr) [end];
     grid-template-rows: auto auto;
     column-gap: var(--space-3);
@@ -484,9 +483,11 @@ a.lg-title:hover { color: var(--color-signal-text); }
     object-fit: cover;
     border: var(--rule-hair) solid var(--color-border);
   }
-  .lg-entry { grid-column: pad-l / end; grid-row: 1; }
-  /* one matching, left-aligned meta line below the author */
-  .lg-no { grid-column: pad-l; grid-row: 2; }
+  .lg-entry { grid-column: content / end; grid-row: 1; }
+  /* one matching, left-aligned meta line below the author.
+     All three sit in auto-sized columns so they group together on the left;
+     the trailing 1fr spacer absorbs the remaining width. */
+  .lg-no { grid-column: content; grid-row: 2; }
   .lg-status { grid-column: m1; grid-row: 2; }
   .lg-date { grid-column: m2; grid-row: 2; }
   .lg-no,
@@ -498,6 +499,7 @@ a.lg-title:hover { color: var(--color-signal-text); }
     letter-spacing: .05em;
     text-transform: uppercase;
     text-align: left;
+    white-space: nowrap;
   }
   .lg-capture {
     grid-column: cover / end;
@@ -532,8 +534,7 @@ a.lg-title:hover { color: var(--color-signal-text); }
   .ledger-row {
     grid-template-columns:
       [cover] clamp(4rem, 22vw, 4.75rem)
-      [pad-l] minmax(0, 1fr)
-      [m1] auto [m2] auto [m3] auto
+      [content] auto [m1] auto [m2] auto
       [pad-r] minmax(0, 1fr) [end];
     column-gap: var(--space-2);
     padding-block: var(--space-4);
