@@ -173,6 +173,11 @@ a.lg-title:hover { color: var(--color-signal-text); }
 
 .lg-capture { margin-top: var(--space-3); max-width: 22rem; }
 
+/* per-row cover tile: hidden on desktop (the sticky hover-preview covers that);
+   shown as a left tile once the preview is gone (≤1000px). A display:none grid
+   item takes no cell, so the desktop 4-column row is unaffected. */
+.lg-thumb { display: none; }
+
 /* ---- preview panel ---- */
 .register-preview { position: sticky; top: var(--space-6); }
 .preview-frame {
@@ -197,12 +202,28 @@ a.lg-title:hover { color: var(--color-signal-text); }
 .preview-numeral { font-size: 7rem; }
 .preview-caption {
   margin-top: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.preview-cap-title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: var(--step-0);
+  line-height: 1.2;
+  color: var(--color-text);
+}
+.preview-cap-status {
   font-size: .62rem;
   font-weight: 700;
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
   color: var(--color-text-mute);
 }
+.preview-cap-status:empty { display: none; }
+.preview-cap-status.st-live { color: var(--color-signal-text); }
+.preview-cap-status.st-next { color: var(--color-text); }
+.preview-cap-status.st-sealed { color: var(--color-text-mute); }
 
 /* ---- release / waitlist ---- */
 .reg-release { background: var(--color-surface-inv); color: var(--color-paper-on-inv); }
@@ -243,6 +264,29 @@ a.lg-title:hover { color: var(--color-signal-text); }
 @media (max-width: 1000px) {
   .register-columns { grid-template-columns: 1fr; }
   .register-preview { display: none; }
+
+  /* card + tile layout: the row becomes Nº | cover | text once the side
+     preview is gone, so every entry carries its own plate */
+  .ledger-cols { display: none; }
+  .ledger-row {
+    grid-template-columns: auto clamp(4.5rem, 12vw, 6rem) minmax(0, 1fr);
+    column-gap: var(--space-3);
+    align-items: start;
+  }
+  .lg-no { grid-column: 1; grid-row: 1; }
+  .lg-thumb {
+    display: block;
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    align-self: start;
+    aspect-ratio: 3 / 4;
+    width: 100%;
+    object-fit: cover;
+    border: var(--rule-hair) solid var(--color-border);
+  }
+  .lg-entry { grid-column: 3; }
+  .lg-status { grid-column: 3; text-align: left; }
+  .lg-date { grid-column: 3; text-align: left; }
 }
 @media (max-width: 800px) {
   .reg-mission { grid-template-columns: 1fr; }
@@ -250,10 +294,6 @@ a.lg-title:hover { color: var(--color-signal-text); }
   .reg-release-grid { grid-template-columns: 1fr; padding-block: var(--space-10); }
 }
 @media (max-width: 640px) {
-  .ledger-cols { display: none; }
-  .ledger-row { grid-template-columns: 2.25rem minmax(0, 1fr); }
-  .lg-status { grid-column: 2; text-align: left; }
-  .lg-date { grid-column: 2; text-align: left; }
   .reg-stamp { display: none; }
   .reg-foot-row { flex-direction: column; gap: var(--space-2); padding-bottom: var(--space-16); }
 }
