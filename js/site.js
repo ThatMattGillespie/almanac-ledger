@@ -53,6 +53,35 @@
     dim();
   }
 
+  // ---- mobile sticky hero: offset main by the fixed hero's height ----
+  // The hero is position:fixed on mobile (≤1000px), so main needs an explicit
+  // margin-top equal to the hero's rendered height. Recompute on resize/load
+  // since the hero height changes with viewport (image scales with vw/vh).
+  (function () {
+    if (!window.matchMedia('(max-width: 1000px)').matches) return;
+    const head = document.querySelector('.reg-head');
+    const main = document.querySelector('main');
+    if (!head || !main) return;
+    let ticking = false;
+    const offset = function () {
+      main.style.marginTop = head.offsetHeight + 'px';
+      ticking = false;
+    };
+    const schedule = function () {
+      if (!ticking) { ticking = true; window.requestAnimationFrame(offset); }
+    };
+    window.addEventListener('resize', schedule, { passive: true });
+    window.addEventListener('load', schedule);
+    window.addEventListener('orientationchange', schedule, { passive: true });
+    // hero images affect height; recompute as each one loads
+    head.querySelectorAll('img').forEach(function (img) {
+      if (img.complete) return;
+      img.addEventListener('load', schedule, { once: true });
+      img.addEventListener('error', schedule, { once: true });
+    });
+    schedule();
+  })();
+
   // ---- ledger row preview (desktop flourish; the aside is hidden on mobile) ----
   const preview = document.getElementById('ledger-preview');
   if (preview) {

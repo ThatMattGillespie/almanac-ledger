@@ -445,7 +445,15 @@ a.lg-title:hover { color: var(--color-signal-text); }
   /* mobile hero: centered masthead. .reg-head-text unwraps via display:contents
      so issuer/title become direct flex items alongside the mockup and subtitle,
      letting `order` place the subtitle after the mockup without touching the
-     (desktop-only-relevant) DOM nesting. */
+     (desktop-only-relevant) DOM nesting.
+     The hero is fixed (like desktop) so the dark mission strip scrolls up over
+     it; main rides above on a higher z-index. */
+  .reg-head {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 0;
+    overflow: hidden;
+  }
   .reg-head-row {
     flex-direction: column;
     align-items: center;
@@ -463,6 +471,17 @@ a.lg-title:hover { color: var(--color-signal-text); }
     max-height: 54vh;
   }
   .reg-stamp { width: clamp(5.5rem, 24vw, 6.75rem); }
+
+  /* scrolling content rides over the fixed hero */
+  main {
+    position: relative;
+    z-index: 3;
+    background: var(--color-bg);
+  }
+  .reg-foot {
+    position: relative;
+    z-index: 10;
+  }
 
   /* card layout: cover flush-left; title/author, then a left-aligned meta line
      (Nº · status · date) beneath them; notify form spans the full card width */
