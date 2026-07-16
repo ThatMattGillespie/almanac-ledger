@@ -502,10 +502,11 @@ a.lg-title:hover { color: var(--color-signal-text); }
     grid-column: cover;
     grid-row: 1 / span 2;
     align-self: start;
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 3 / 4.2;
     width: 100%;
     object-fit: cover;
     border: var(--rule-hair) solid var(--color-border);
+    margin-right: var(--space-5);
   }
   .lg-entry { grid-column: content / end; grid-row: 1; }
   /* one matching, left-aligned meta line below the author.
@@ -562,6 +563,10 @@ a.lg-title:hover { color: var(--color-signal-text); }
       [pad-r] minmax(0, 1fr) [end];
     column-gap: var(--space-2);
     padding-block: var(--space-4);
+  }
+  .lg-thumb {
+    aspect-ratio: 3 / 4.2;
+    margin-right: var(--space-4);
   }
   .lg-title { font-size: 1rem; }
 
