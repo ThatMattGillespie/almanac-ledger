@@ -15,9 +15,16 @@
   gap: var(--space-6);
   padding-block: var(--space-8) var(--space-6);
 }
-/* hero pieces (the cinematic cover + dim layer) are desktop-only */
-.reg-hero-overlay,
-.reg-hero-media { display: none; }
+/* the dim layer is desktop-only; the cover shows at every width */
+.reg-hero-overlay { display: none; }
+.reg-hero-media { position: relative; }
+/* the sunburst rides the cover's top-right corner wherever the cover shows */
+.reg-hero-media .reg-stamp {
+  position: absolute;
+  top: -0.6rem;
+  right: -0.6rem;
+  z-index: 1;
+}
 .reg-issuer {
   display: flex;
   flex-direction: column;
@@ -26,13 +33,15 @@
 }
 .reg-logo { display: block; width: clamp(190px, 20vw, 250px); height: auto; }
 .reg-presents {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: var(--step-0);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--step-1);
+  letter-spacing: .04em;
+  text-transform: uppercase;
   color: var(--color-text-mute);
 }
 .reg-title {
-  font-family: var(--font-display);
+  font-family: 'DIN Condensed', var(--font-display);
   font-weight: 700;
   font-size: var(--step-5);
   line-height: .95;
@@ -48,30 +57,47 @@
   text-transform: uppercase;
   color: var(--color-signal-text);
 }
+/* sunburst "violator": white burst with a signal rim, sticker tilt */
 .reg-stamp {
-  background: #fff;
-  border: var(--rule-bold) solid var(--color-signal);
-  color: var(--color-signal-text);
+  --burst: polygon(50.0% 0.0%, 58.4% 7.8%, 69.1% 3.8%, 73.9% 14.2%, 85.4% 14.6%, 85.8% 26.1%, 96.2% 30.9%, 92.2% 41.6%, 100.0% 50.0%, 92.2% 58.4%, 96.2% 69.1%, 85.8% 73.9%, 85.4% 85.4%, 73.9% 85.8%, 69.1% 96.2%, 58.4% 92.2%, 50.0% 100.0%, 41.6% 92.2%, 30.9% 96.2%, 26.1% 85.8%, 14.6% 85.4%, 14.2% 73.9%, 3.8% 69.1%, 7.8% 58.4%, 0.0% 50.0%, 7.8% 41.6%, 3.8% 30.9%, 14.2% 26.1%, 14.6% 14.6%, 26.1% 14.2%, 30.9% 3.8%, 41.6% 7.8%);
+  position: relative;
+  width: clamp(6.75rem, 9vw, 8.5rem);
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  padding: var(--space-4) var(--space-5);
-  transform: rotate(3deg);
-  box-shadow: var(--shadow-card);
+  color: var(--color-signal-text);
+  background: var(--color-signal);
+  clip-path: var(--burst);
+  transform: rotate(-5deg);
+  filter: drop-shadow(0 5px 10px rgba(43, 38, 29, .22));
+}
+/* white face inset inside the signal star leaves a signal rim around the burst */
+.reg-stamp::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  background: #fff;
+  clip-path: var(--burst);
+  z-index: -1;
 }
 .reg-stamp-no {
   display: block;
   font-family: var(--font-display);
   font-weight: 700;
   font-size: var(--step-3);
-  line-height: 1;
+  line-height: .9;
 }
 .reg-stamp-label {
   display: block;
-  margin-top: var(--space-1);
-  font-size: .62rem;
+  margin-top: 3px;
+  font-size: .52rem;
   font-weight: 700;
-  letter-spacing: var(--tracking-label);
+  letter-spacing: .03em;
   text-transform: uppercase;
-  line-height: 1.3;
+  line-height: 1.2;
 }
 .reg-band { height: 44px; opacity: .45; border-top: var(--rule-hair) solid var(--color-border); }
 
@@ -181,7 +207,7 @@ a.lg-title:hover { color: var(--color-signal-text); }
 .st-sealed { color: var(--color-text-mute); }
 .lg-date { font-size: var(--step--1); font-weight: 600; letter-spacing: .06em; color: var(--color-text-mute); text-align: right; font-variant-numeric: tabular-nums; }
 
-.lg-capture { margin-top: var(--space-3); max-width: 22rem; }
+.lg-capture { grid-column: 2; margin-top: var(--space-3); max-width: 22rem; }
 
 /* per-row cover tile: hidden on desktop (the sticky hover-preview covers that);
    shown as a left tile once the preview is gone (≤1000px). A display:none grid
@@ -344,28 +370,50 @@ a.lg-title:hover { color: var(--color-signal-text); }
   .register-columns { grid-template-columns: 1fr; }
   .register-preview { display: none; }
 
-  /* card + tile layout: the row becomes Nº | cover | text once the side
-     preview is gone, so every entry carries its own plate */
+  /* mobile hero: the cover joins the stacked header, below the title block */
+  .reg-head-row { flex-direction: column; align-items: flex-start; }
+  .reg-hero-media { display: block; width: max-content; max-width: 100%; margin-top: var(--space-5); }
+  .reg-hero-media img { width: min(62vw, 250px); height: auto; max-height: none; }
+  .reg-stamp { width: clamp(5.5rem, 24vw, 6.75rem); }
+
+  /* card layout: cover flush-left, one meta line (Nº · status · date), title/author
+     below, and the notify form spanning the full card width beneath both columns */
   .ledger-cols { display: none; }
   .ledger-row {
-    grid-template-columns: auto clamp(4.5rem, 12vw, 6rem) minmax(0, 1fr);
+    grid-template-columns: [cover] clamp(4.5rem, 20vw, 5.5rem) [m1] auto [m2] auto [m3] 1fr;
+    grid-template-rows: auto auto;
     column-gap: var(--space-3);
+    row-gap: 4px;
     align-items: start;
+    padding-block: var(--space-5);
   }
-  .lg-no { grid-column: 1; grid-row: 1; }
   .lg-thumb {
     display: block;
-    grid-column: 2;
-    grid-row: 1 / span 3;
+    grid-column: cover;
+    grid-row: 1 / span 2;
     align-self: start;
     aspect-ratio: 3 / 4;
     width: 100%;
     object-fit: cover;
     border: var(--rule-hair) solid var(--color-border);
   }
-  .lg-entry { grid-column: 3; }
-  .lg-status { grid-column: 3; text-align: left; }
-  .lg-date { grid-column: 3; text-align: left; }
+  .lg-no { grid-column: m1; grid-row: 1; }
+  .lg-status { grid-column: m2; grid-row: 1; text-align: left; }
+  .lg-date { grid-column: m3; grid-row: 1; text-align: left; justify-self: start; }
+  .lg-no::after,
+  .lg-status::after {
+    content: "·";
+    margin-inline: .1em .35em;
+    color: var(--color-text-mute);
+    font-weight: 600;
+  }
+  .lg-entry { grid-column: m1 / -1; grid-row: 2; }
+  .lg-capture {
+    grid-column: cover / -1;
+    grid-row: 3;
+    max-width: none;
+    margin-top: var(--space-3);
+  }
 }
 @media (max-width: 800px) {
   .reg-mission { grid-template-columns: 1fr; }
@@ -373,6 +421,5 @@ a.lg-title:hover { color: var(--color-signal-text); }
   .reg-release-grid { grid-template-columns: 1fr; padding-block: var(--space-10); }
 }
 @media (max-width: 640px) {
-  .reg-stamp { display: none; }
   .reg-foot-row { flex-direction: column; gap: var(--space-2); padding-bottom: var(--space-16); }
 }

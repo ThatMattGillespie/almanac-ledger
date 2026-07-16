@@ -48,6 +48,15 @@
   font-display: swap;
 }
 
+/* ---- DIN Condensed (print display face, hero title only) ---- */
+@font-face {
+  font-family: 'DIN Condensed';
+  src: url('../fonts/DINCondensed-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   /* --- durable structure (fixed across volumes) --- */
   --color-bg:          #FBFAF7;   /* warm paper */
