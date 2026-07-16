@@ -422,6 +422,21 @@ a.lg-title:hover { color: var(--color-signal-text); }
   .register-columns { grid-template-columns: 1fr; }
   .register-preview { display: none; }
 
+  /* reduce the generous desktop register padding on tablet/mobile */
+  .register { padding-top: var(--space-8); padding-bottom: var(--space-8); }
+
+  /* full-width dark overlay so text keeps contrast over the dove pattern */
+  .reg-mission {
+    background:
+      linear-gradient(180deg, rgba(24,37,49,.92) 0%, rgba(24,37,49,.88) 100%),
+      url(../assets/Dove_pattern_spread.png) center / cover no-repeat;
+  }
+  .reg-release {
+    background:
+      linear-gradient(180deg, rgba(24,37,49,.92) 0%, rgba(24,37,49,.88) 100%),
+      url(../assets/Dove_pattern_spread.png) center / cover no-repeat;
+  }
+
   /* mobile hero: centered masthead. .reg-head-text unwraps via display:contents
      so issuer/title become direct flex items alongside the mockup and subtitle,
      letting `order` place the subtitle after the mockup without touching the
@@ -444,7 +459,7 @@ a.lg-title:hover { color: var(--color-signal-text); }
   }
   .reg-stamp { width: clamp(5.5rem, 24vw, 6.75rem); }
 
-  /* card layout: cover flush-left; title/author, then a centered meta line
+  /* card layout: cover flush-left; title/author, then a left-aligned meta line
      (Nº · status · date) beneath them; notify form spans the full card width */
   .ledger-cols { display: none; }
   .ledger-row {
@@ -470,10 +485,10 @@ a.lg-title:hover { color: var(--color-signal-text); }
     border: var(--rule-hair) solid var(--color-border);
   }
   .lg-entry { grid-column: pad-l / end; grid-row: 1; }
-  /* one matching, centered meta line below the author */
-  .lg-no { grid-column: m1; grid-row: 2; }
-  .lg-status { grid-column: m2; grid-row: 2; }
-  .lg-date { grid-column: m3; grid-row: 2; }
+  /* one matching, left-aligned meta line below the author */
+  .lg-no { grid-column: pad-l; grid-row: 2; }
+  .lg-status { grid-column: m1; grid-row: 2; }
+  .lg-date { grid-column: m2; grid-row: 2; }
   .lg-no,
   .lg-status,
   .lg-date {
@@ -482,7 +497,7 @@ a.lg-title:hover { color: var(--color-signal-text); }
     font-weight: 600;
     letter-spacing: .05em;
     text-transform: uppercase;
-    text-align: center;
+    text-align: left;
   }
   .lg-capture {
     grid-column: cover / end;
@@ -492,10 +507,42 @@ a.lg-title:hover { color: var(--color-signal-text); }
   }
 }
 @media (max-width: 800px) {
-  .reg-mission { grid-template-columns: 1fr; }
+  /* fix: target the actual grid container (.reg-mission-inner), not the section */
+  .reg-mission-inner { grid-template-columns: 1fr; gap: var(--space-6); }
+  .reg-mission { padding-block: var(--space-8); }
   .reg-facts { justify-content: start; }
   .reg-release-grid { grid-template-columns: 1fr; padding-block: var(--space-10); }
 }
 @media (max-width: 640px) {
   .reg-foot-row { flex-direction: column; gap: var(--space-2); padding-bottom: var(--space-16); }
+
+  /* facts: 2x2 grid instead of a cramped 4-across row */
+  .reg-facts {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4) var(--space-6);
+    width: 100%;
+  }
+
+  /* capture forms: stack input above button so neither is cramped */
+  .capture { flex-direction: column; max-width: none; }
+  .capture input[type="email"] { border-right: var(--rule-hair) solid var(--color-text-2); }
+  .capture .btn { width: 100%; }
+
+  /* tighten the register rows on small phones */
+  .ledger-row {
+    grid-template-columns:
+      [cover] clamp(4rem, 22vw, 4.75rem)
+      [pad-l] minmax(0, 1fr)
+      [m1] auto [m2] auto [m3] auto
+      [pad-r] minmax(0, 1fr) [end];
+    column-gap: var(--space-2);
+    padding-block: var(--space-4);
+  }
+  .lg-title { font-size: 1rem; }
+
+  /* mission text can use the full width on small phones */
+  .reg-mission-text { max-width: none; }
+
+  /* release heading scales down on small phones */
+  .reg-release-head { font-size: var(--step-2); }
 }
