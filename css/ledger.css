@@ -340,6 +340,11 @@ a.lg-title:hover { color: var(--color-signal-text); }
   letter-spacing: .04em;
   color: #D4CFC2;
 }
+/* the footer link inherits the global signal-text color, which is tuned for
+   the light paper ground. On the dark footer surface it reads too dark, so
+   brighten it to the same paper-on-ink tone the rest of the footer uses. */
+.reg-foot a { color: #F4EFE6; text-decoration-color: color-mix(in srgb, #F4EFE6 40%, transparent); }
+.reg-foot a:hover { text-decoration-color: #F4EFE6; }
 
 /* ---- cinematic opening (desktop only) ----
    The header becomes a fixed 100vh hero — title left, printed cover right.
@@ -516,7 +521,7 @@ a.lg-title:hover { color: var(--color-signal-text); }
   .reg-release-grid { grid-template-columns: 1fr; padding-block: var(--space-10); }
 }
 @media (max-width: 640px) {
-  .reg-foot-row { flex-direction: column; gap: var(--space-2); padding-bottom: var(--space-16); }
+  .reg-foot-row { flex-direction: column; gap: var(--space-2); padding-block: var(--space-5); }
 
   /* facts: 2x2 grid instead of a cramped 4-across row */
   .reg-facts {
