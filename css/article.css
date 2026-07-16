@@ -34,11 +34,27 @@
   color: var(--color-text-mute);
 }
 
+/* ---- intro: portrait image left, header text right (desktop) ---- */
+.art-intro {
+  max-width: var(--width-content);
+  margin-inline: auto;
+  padding: clamp(2.5rem, 6vw, 4.5rem) var(--gutter) var(--space-8);
+}
+@media (min-width: 768px) {
+  .art-intro {
+    display: grid;
+    grid-template-columns: 5fr 6fr;
+    gap: clamp(2rem, 4vw, 4rem);
+    align-items: center;
+  }
+  .art-figure { grid-column: 1; grid-row: 1; margin: 0; }
+  .art-head { grid-column: 2; grid-row: 1; }
+}
+
 /* ---- article header ---- */
 .art-head {
-  max-width: 46rem;
-  padding-top: clamp(2.5rem, 6vw, 4.5rem);
-  padding-bottom: var(--space-6);
+  max-width: none;
+  padding-bottom: 0;
 }
 .art-part {
   font-family: var(--font-grotesque);
@@ -84,13 +100,9 @@
   color: var(--color-text-mute);
 }
 
-/* ---- lead figure ---- */
-.art-figure {
-  max-width: var(--width-content);
-  margin: var(--space-6) auto var(--space-8);
-  padding-inline: var(--gutter);
-}
-.art-figure img { width: 100%; aspect-ratio: 16 / 8; object-fit: cover; border: var(--rule-hair) solid var(--color-border); }
+/* ---- lead figure (portrait plate) ---- */
+.art-figure { margin: var(--space-6) 0 0; }
+.art-figure img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border: var(--rule-hair) solid var(--color-border); }
 .art-figure figcaption {
   margin-top: var(--space-3);
   font-family: var(--font-grotesque);
@@ -101,12 +113,14 @@
   color: var(--color-text-mute);
 }
 
-/* ---- body ---- */
+/* ---- body ----
+   Reading measure tuned to Medium/Substack norms: ~18–20px serif body,
+   line-height ~1.6, ~66-character column. */
 .art-body { max-width: 40rem; }
 .art-body p {
   font-family: var(--font-serif);
-  font-size: var(--step-1);
-  line-height: 1.68;
+  font-size: clamp(1.15rem, 1.08rem + 0.3vw, 1.25rem);
+  line-height: 1.62;
   color: var(--color-text-2);
   margin-bottom: var(--space-5);
 }
@@ -134,8 +148,8 @@
 .art-quote p {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: var(--step-2);
-  line-height: 1.4;
+  font-size: var(--step-1);
+  line-height: 1.45;
   color: var(--color-text);
   margin: 0;
 }

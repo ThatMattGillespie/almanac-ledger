@@ -15,6 +15,9 @@
   gap: var(--space-6);
   padding-block: var(--space-8) var(--space-6);
 }
+/* hero pieces (the cinematic cover + dim layer) are desktop-only */
+.reg-hero-overlay,
+.reg-hero-media { display: none; }
 .reg-issuer {
   font-size: var(--step--1);
   font-weight: 600;
@@ -258,6 +261,61 @@ a.lg-title:hover { color: var(--color-signal-text); }
   font-size: var(--step--1);
   letter-spacing: .04em;
   color: var(--color-text-mute);
+}
+
+/* ---- cinematic opening (desktop only) ----
+   The header becomes a fixed 100vh hero — title left, printed cover right.
+   The register (led by the dot-grid band) scrolls up over it on a higher
+   layer, and an overlay dims the whole hero as you go. */
+@media (min-width: 1001px) {
+  .reg-head {
+    position: fixed;
+    inset: 0;
+    height: 100vh;
+    z-index: 0;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  .reg-head-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: center;
+    width: 100%;
+    padding-block: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .reg-head .reg-title { font-size: var(--step-6); margin-top: var(--space-4); }
+  .reg-head-text .reg-stamp { margin-top: var(--space-6); }
+
+  .reg-hero-media { display: block; justify-self: end; }
+  .reg-hero-media img {
+    width: 100%;
+    max-height: 78vh;
+    object-fit: contain;
+    border: var(--rule-hair) solid var(--color-border);
+    box-shadow: var(--shadow-card);
+  }
+
+  .reg-hero-overlay {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: var(--color-surface-inv);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* scrolling content rides over the fixed hero */
+  main {
+    position: relative;
+    z-index: 3;
+    margin-top: 100vh;
+    background: var(--color-bg);
+  }
 }
 
 /* ---- responsive ---- */

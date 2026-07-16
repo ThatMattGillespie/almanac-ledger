@@ -38,6 +38,21 @@
     });
   });
 
+  // ---- cinematic opening: dim the fixed hero as the register scrolls over it ----
+  const heroOverlay = document.querySelector('.reg-hero-overlay');
+  if (heroOverlay && window.matchMedia('(min-width: 1001px)').matches) {
+    let ticking = false;
+    const dim = function () {
+      const p = Math.min(window.scrollY / window.innerHeight, 1);
+      heroOverlay.style.opacity = (p * 0.6).toFixed(3);
+      ticking = false;
+    };
+    window.addEventListener('scroll', function () {
+      if (!ticking) { ticking = true; window.requestAnimationFrame(dim); }
+    }, { passive: true });
+    dim();
+  }
+
   // ---- ledger row preview (desktop flourish; the aside is hidden on mobile) ----
   const preview = document.getElementById('ledger-preview');
   if (preview) {
