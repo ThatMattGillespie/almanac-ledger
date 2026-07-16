@@ -43,14 +43,20 @@
   text-transform: uppercase;
   color: var(--color-text-mute);
 }
+/* the printed cover carries the wordmark, so the masthead title would repeat it.
+   Keep the H1 in the document for structure and screen readers, but pull it
+   visually so the above-the-fold shows the name once (on the cover). */
 .reg-title {
-  font-family: 'DIN Condensed', var(--font-display);
-  font-weight: 700;
-  font-size: var(--step-5);
-  line-height: .95;
-  letter-spacing: .02em;
-  text-transform: uppercase;
-  margin-top: var(--space-3);
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
 }
 .reg-subtitle {
   margin-top: var(--space-3);
@@ -310,34 +316,41 @@ a.lg-title:hover { color: var(--color-signal-text); }
     height: 100vh;
     z-index: 0;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     overflow: hidden;
   }
+  /* one centered column: EPI logo -> "presents the" -> printed cover -> subtitle.
+     .reg-head-text unwraps (display:contents) so its children order in the same
+     flex column as the cover; the cover carries the wordmark, so the H1 is hidden. */
   .reg-head-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: clamp(2rem, 5vw, 5rem);
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0;
     width: 100%;
-    padding-block: clamp(2rem, 6vh, 3.5rem) 0;
+    padding-block: clamp(1.5rem, 4vh, 2.5rem);
     position: relative;
     z-index: 1;
   }
-  .reg-head .reg-title { font-size: var(--step-6); margin-top: var(--space-4); }
+  .reg-head-text { display: contents; }
+  .reg-issuer { order: 1; align-items: center; }
+  .reg-subtitle { order: 3; margin-top: var(--space-5); }
 
   /* media shrink-wraps the cover so the sticker can hug its true corner */
   .reg-hero-media {
+    order: 2;
     display: block;
     position: relative;
-    justify-self: end;
     width: max-content;
     max-width: 100%;
+    margin-top: var(--space-5);
   }
   .reg-hero-media img {
     display: block;
     width: auto;
     max-width: 100%;
-    max-height: calc(100vh - clamp(2rem, 6vh, 3.5rem) - var(--space-6));
+    max-height: calc(100vh - 21rem);
   }
 
   .reg-hero-overlay {
@@ -357,12 +370,12 @@ a.lg-title:hover { color: var(--color-signal-text); }
     margin-top: 100vh;
     background: var(--color-bg);
   }
-  /* the footer is a sibling of main, not inside it — without its own stacking
-     order it paints behind the fixed hero (and its dim overlay) once scrolled
-     past, showing through as a dark tint. Match main's treatment. */
+  /* the footer is a sibling of main, not inside it. The fixed hero (and its dim
+     overlay) sit at z-index 0; give the footer a stacking order above every
+     scrolling section so it can never show the hero through as a dark tint. */
   .reg-foot {
     position: relative;
-    z-index: 3;
+    z-index: 10;
     background: var(--color-bg);
   }
 }
@@ -384,9 +397,8 @@ a.lg-title:hover { color: var(--color-signal-text); }
   }
   .reg-head-text { display: contents; }
   .reg-issuer { order: 1; align-items: center; }
-  .reg-title { order: 2; }
-  .reg-hero-media { order: 3; display: block; width: max-content; max-width: 100%; margin: var(--space-5) auto 0; }
-  .reg-subtitle { order: 4; margin-top: var(--space-5); }
+  .reg-hero-media { order: 2; display: block; width: max-content; max-width: 100%; margin: var(--space-5) auto 0; }
+  .reg-subtitle { order: 3; margin-top: var(--space-5); }
   .reg-logo { width: min(150px, 42vw); }
   .reg-hero-media img {
     width: auto;
