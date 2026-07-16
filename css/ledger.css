@@ -37,7 +37,6 @@
   align-items: flex-start;
   gap: var(--space-2);
 }
-.reg-logo { display: block; width: clamp(190px, 20vw, 250px); height: auto; }
 .reg-presents {
   font-family: var(--font-display);
   font-weight: 600;
@@ -120,6 +119,12 @@
   gap: clamp(2rem, 5vw, 5rem);
   align-items: start;
   padding-block: var(--space-8);
+}
+.reg-mission-logo {
+  display: block;
+  width: clamp(140px, 16vw, 180px);
+  height: auto;
+  margin-bottom: var(--space-4);
 }
 .reg-mission-text {
   font-family: var(--font-serif);
@@ -322,11 +327,10 @@ a.lg-title:hover { color: var(--color-signal-text); }
     align-items: flex-start;
     overflow: hidden;
   }
-  /* one centered column: EPI logo -> "presents the" -> printed cover -> subtitle.
+  /* one centered column: "introducing the" eyebrow -> printed cover -> subtitle.
      .reg-head-text unwraps (display:contents) so its children order in the same
-     flex column as the cover; the cover carries the wordmark, so the H1 is hidden.
-     Anchored near the top (flex-start, not centered) so the column doesn't float
-     in an even band of empty space above and below. */
+     flex column as the cover; the cover carries the wordmark, so the H1 stays
+     hidden and the EPI logo has moved down into the mission strip below. */
   .reg-head-row {
     flex-direction: column;
     align-items: center;
@@ -355,7 +359,7 @@ a.lg-title:hover { color: var(--color-signal-text); }
     display: block;
     width: auto;
     max-width: 100%;
-    max-height: calc(100vh - 21rem);
+    max-height: calc(100vh - 13rem);
   }
 
   .reg-hero-overlay {
@@ -404,7 +408,6 @@ a.lg-title:hover { color: var(--color-signal-text); }
   .reg-issuer { order: 1; align-items: center; }
   .reg-hero-media { order: 2; display: block; width: max-content; max-width: 100%; margin: var(--space-5) auto 0; }
   .reg-subtitle { order: 3; margin-top: var(--space-5); }
-  .reg-logo { width: min(150px, 42vw); }
   .reg-hero-media img {
     width: auto;
     height: auto;
