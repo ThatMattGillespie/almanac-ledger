@@ -254,8 +254,19 @@ a.lg-title:hover { color: var(--color-signal-text); }
    item takes no cell, so the desktop 4-column row is unaffected. */
 .lg-thumb { display: none; }
 
-/* ---- preview panel ---- */
-.register-preview { position: sticky; top: var(--space-6); }
+/* ---- preview panel ----
+   Centered via top: calc(50% - var(--aside-half)) rather than
+   transform: translateY(-50%). Transforms don't affect the sticky
+   constraint box, so translateY(-50%) caused the preview to un-pin
+   ~half its height too early (vanishing during PART IV). With no
+   transform, sticky releases exactly when the preview's bottom edge
+   meets the containing block's bottom (= last ledger row's bottom).
+   --aside-half is maintained by JS (syncAsideHalf in site.js). */
+.register-preview {
+  position: sticky;
+  top: calc(50% - var(--aside-half, 0px));
+  margin-top: vh;
+}
 .preview-frame {
   position: relative;
   aspect-ratio: 3 / 4;
@@ -412,6 +423,28 @@ a.lg-title:hover { color: var(--color-signal-text); }
     margin-top: 100vh;
     background: var(--color-bg);
   }
+
+  /* ---- parallax reveal: the register is a fixed background layer that the
+     mission strip scrolls up to uncover. Layer order (low → high):
+       hero (z0, fixed) — the register sits above the hero
+       register.is-pinned (z1, fixed at top:0) — the fixed backdrop
+       mission (z2) — scrolls up over the register to reveal it
+       everything after the register in flow (waitlist z3, footer z10)
+     The register is fixed at top:0 but the mission (taller stacking context)
+     covers it until it scrolls away. JS toggles .is-pinned + manages a spacer. */
+  .register.is-pinned {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    background: var(--color-bg);
+  }
+  /* the mission strip sits above the fixed register so it can reveal it */
+  .reg-mission { position: relative; z-index: 2; }
+  /* the waitlist must cover the register when it scrolls up, so it sits above */
+  .reg-release { position: relative; z-index: 3; }
+
   /* the footer is a sibling of main, not inside it. The fixed hero (and its dim
      overlay) sit at z-index 0; give the footer a stacking order above every
      scrolling section so it can never show the hero through as a dark tint. */

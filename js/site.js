@@ -84,6 +84,24 @@
 
   // ---- ledger row preview (desktop flourish; the aside is hidden on mobile) ----
   const preview = document.getElementById('ledger-preview');
+  const previewAside = document.querySelector('.register-preview');
+  // Keep --aside-half (half the aside's measured height) in sync with the
+  // CSS `top: calc(50% - var(--aside-half))` rule. This is what centers the
+  // sticky preview vertically AND makes it release exactly when its bottom
+  // edge meets the last ledger row's bottom (the containing-block bottom).
+  // Recompute on resize and on hover, since gaining/losing the caption's
+  // status line changes the aside height by ~16px.
+  var syncAsideHalf = function () {
+    if (!previewAside) return;
+    previewAside.style.setProperty(
+      '--aside-half',
+      (previewAside.offsetHeight / 2) + 'px'
+    );
+  };
+  if (previewAside) {
+    syncAsideHalf();
+    window.addEventListener('resize', syncAsideHalf);
+  }
   if (preview) {
     const img = preview.querySelector('img');
     const fallback = preview.querySelector('.preview-fallback');
@@ -118,11 +136,13 @@
           capStatus.className = 'preview-cap-status' + (state ? ' ' + state : '');
         }
         preview.classList.add('is-active');
+        syncAsideHalf();
       });
       row.addEventListener('mouseleave', function () {
         preview.classList.remove('is-active');
         if (capTitle) capTitle.textContent = capTitleDefault;
         if (capStatus) { capStatus.textContent = ''; capStatus.className = 'preview-cap-status'; }
+        syncAsideHalf();
       });
     });
   }
